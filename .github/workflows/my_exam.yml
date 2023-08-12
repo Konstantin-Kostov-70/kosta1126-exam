@@ -18,6 +18,21 @@ jobs:
       with:
         node-version: 14.x
         cache: 'npm'
-    - run: npm install
-    - run: npm run test:unit
-    - run: echo "kosta1126"
+    - name: Install NPM
+      run: npm install
+    - name: Run Tests
+      run: npm run test:unit
+    - name: Display username
+      run: echo "kosta1126"
+
+  deploy:
+
+    needs: build
+        
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Render.com
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.SERVICE_ID }}
+          api-key: ${{ secrets.RENDER_API }}
